@@ -1,11 +1,11 @@
 import { FormEvent, useState } from "react";
-import { Loader, Placeholder } from "@aws-amplify/ui-react";
+import { Loader, Placeholder, Button } from "@aws-amplify/ui-react";
 import "./App.css";
 import { Amplify } from "aws-amplify";
 import { Schema } from "../amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
 import outputs from "../amplify_outputs.json";
-
+import { signOut } from "aws-amplify/auth";
 
 import "@aws-amplify/ui-react/styles.css";
 
@@ -22,25 +22,41 @@ function App() {
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
+    setResult("");
 
     try {
       const formData = new FormData(event.currentTarget);
-      
-      const { data, errors } = await amplifyClient.queries.askBedrock({
-        ingredients: [formData.get("ingredients")?.toString() || ""],
-      });
+      const ingredients = formData.get("ingredients")?.toString().trim() || "";
 
-      if (!errors) {
-        setResult(data?.body || "No data returned");
-      } else {
-        console.log(errors);
+      if (!ingredients) {
+        alert("Please enter at least one ingredient.");
+        return;
       }
 
-  
+      const { data, errors } = await amplifyClient.queries.askBedrock({
+        ingredients: [ingredients],
+      });
+
+      if (errors) {
+        console.error("GraphQL errors:", errors);
+        alert("Something went wrong. Check the console for details.");
+      } else {
+        setResult(data?.body || "No recipe returned.");
+      }
     } catch (e) {
-      alert(`An error occurred: ${e}`);
+      console.error("Exception:", e);
+      alert(`An error occurred: ${(e as Error).message}`);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleLogOut = async () => {
+    try {
+      await signOut();
+      window.location.href = "/"; // optional: redirect to home/login page
+    } catch (error) {
+      console.error("Error signing out:", error);
     }
   };
 
@@ -53,11 +69,11 @@ function App() {
           <span className="highlight">Recipe AI</span>
         </h1>
         <p className="description">
-          Simply type a few ingredients using the format ingredient1,
-          ingredient2, etc., and Recipe AI will generate an all-new recipe on
-          demand...
+          Simply type a few ingredients using the format ingredient1, ingredient2, etc., 
+          and Recipe AI will generate an all-new recipe on demand...
         </p>
       </div>
+
       <form onSubmit={onSubmit} className="form-container">
         <div className="search-container">
           <input
@@ -71,7 +87,14 @@ function App() {
             Generate
           </button>
         </div>
+
+        <div className="logout-container">
+          <Button variation="link" onClick={handleLogOut}>
+            Log Out
+          </Button>
+        </div>
       </form>
+
       <div className="result-container">
         {loading ? (
           <div className="loader-container">
