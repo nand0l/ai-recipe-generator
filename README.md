@@ -14,3 +14,16 @@ It is deployed to:
 ## Usage
 
 Simply enter your ingredients (comma-separated) and the AI will generate a custom recipe using AWS Bedrock with Claude 3 Sonnet.
+
+## Development
+
+the current version is developed throm the **source_folder** on: `C:\code\AWS\uploader\frontend\ai-recipe-generator`
+
+### sandbox
+
+From the **source_folder** run `npx ampx sandbox` to run the sanbox for the demo environment
+
+### Local development server
+
+From the **source_folder** run `npm run dev` to run the local develoment server for the demo environment
+press `o` follopwed by `{enter}` to open a browser-page to the local server.
