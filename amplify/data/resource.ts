@@ -10,8 +10,8 @@ const schema = a.schema({
     .query()
     .arguments({ 
       ingredients: a.string().array(),
-      language: a.string().optional(),
-      measurementSystem: a.string().optional()
+      language: a.string(),
+      measurementSystem: a.string()
     })
     .returns(a.ref("BedrockResponse"))
     .authorization((allow) => [allow.authenticated()])
