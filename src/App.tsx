@@ -6,6 +6,13 @@ import { Schema } from "../amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
 import outputs from "../amplify_outputs.json";
 import { signOut } from "aws-amplify/auth";
+import LanguageSelector from "./components/LanguageSelector";
+import "./components/LanguageSelector.css";
+import { 
+  Language, 
+  DEFAULT_LANGUAGE, 
+  MEASUREMENT_SYSTEMS
+} from "./utils/languageUtils";
 
 import "@aws-amplify/ui-react/styles.css";
 
@@ -18,6 +25,9 @@ const amplifyClient = generateClient<Schema>({
 function App() {
   const [result, setResult] = useState<string>("");
   const [loading, setLoading] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState<Language>(DEFAULT_LANGUAGE);
+  // Always use European measurements (first option in MEASUREMENT_SYSTEMS)
+  const europeanMeasurements = MEASUREMENT_SYSTEMS[0];
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -35,6 +45,8 @@ function App() {
 
       const { data, errors } = await amplifyClient.queries.askBedrock({
         ingredients: [ingredients],
+        language: selectedLanguage.code,
+        measurementSystem: europeanMeasurements.code
       });
 
       if (errors) {
@@ -49,6 +61,10 @@ function App() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleLanguageChange = (language: Language) => {
+    setSelectedLanguage(language);
   };
 
   const handleLogOut = async () => {
@@ -75,6 +91,11 @@ function App() {
       </div>
 
       <form onSubmit={onSubmit} className="form-container">
+        <LanguageSelector 
+          onLanguageChange={handleLanguageChange}
+          selectedLanguage={selectedLanguage}
+        />
+        
         <div className="search-container">
           <input
             type="text"

@@ -3,33 +3,175 @@
   line-height: 1.5;
   font-weight: 400;
 
+  color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
 
-  max-width: 1280px;
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: #f8f8f8;
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.9) 100%), 
+                    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect x="0" y="0" width="50" height="50" fill="%23f8f8f8"/><rect x="50" y="0" width="50" height="50" fill="%23f0f0f0"/><rect x="0" y="50" width="50" height="50" fill="%23f0f0f0"/><rect x="50" y="50" width="50" height="50" fill="%23f8f8f8"/></svg>');
+}
+
+/* Create a full-height container for the login screen */
+#root {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Only apply these styles to the login screen, not the app itself */
+.amplify-authenticator-container ~ div {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Dutch theme overrides for Cognito components */
+.amplify-authenticator {
+  --amplify-colors-brand-primary-10: #FFF2E5;
+  --amplify-colors-brand-primary-20: #FFE5CC;
+  --amplify-colors-brand-primary-40: #FFCC99;
+  --amplify-colors-brand-primary-60: #FFA64D;
+  --amplify-colors-brand-primary-80: #FF8019;
+  --amplify-colors-brand-primary-90: #FF6200;
+  --amplify-colors-brand-primary-100: #E05600;
+  --amplify-colors-font-interactive: #21468B;
+  --amplify-colors-font-hover: #FF6200;
+  --amplify-colors-font-focus: #FF6200;
+  --amplify-colors-font-active: #E05600;
+  --amplify-colors-border-focus: #FF6200;
+  --amplify-components-fieldcontrol-focus-border-color: #FF6200;
+  --amplify-components-fieldcontrol-focus-box-shadow: 0 0 0 2px rgba(255, 98, 0, 0.2);
+}
+
+/* Dutch flag stripe at the top of the authenticator */
+.amplify-authenticator {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  max-width: 460px;
   margin: 0 auto;
-  padding: 2rem;
-
+  width: 90%;
 }
 
-.card {
-  padding: 2em;
+.amplify-authenticator::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(to right, #AE1C28 33%, #FFFFFF 33%, #FFFFFF 66%, #21468B 66%);
+  z-index: 1;
 }
 
-.read-the-docs {
-  color: #888;
+/* Style for the authenticator container */
+.amplify-authenticator .amplify-authenticator-container {
+  background-color: #FFFFFF;
+  border-radius: 8px;
+  border: 1px solid #DDDDDD;
+  padding: 20px;
 }
 
-.box:nth-child(3n + 1) {
-  grid-column: 1;
+/* Add a Dutch-themed welcome message */
+.amplify-authenticator .amplify-authenticator-container::before {
+  content: 'Welkom bij Recipe AI';
+  display: block;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #21468B;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #EEEEEE;
+  position: relative;
 }
-.box:nth-child(3n + 2) {
-  grid-column: 2;
+
+/* Add a small Dutch flag icon next to the welcome message */
+.amplify-authenticator .amplify-authenticator-container::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 24px;
+  height: 16px;
+  background-image: linear-gradient(to bottom, #AE1C28 33%, #FFFFFF 33%, #FFFFFF 66%, #21468B 66%);
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
-.box:nth-child(3n + 3) {
-  grid-column: 3;
+
+/* Style for buttons */
+.amplify-button[data-variation='primary'] {
+  background-color: #FF6200;
+  border-color: #FF6200;
+}
+
+.amplify-button[data-variation='primary']:hover {
+  background-color: #E05600;
+  border-color: #E05600;
+}
+
+/* Style for links */
+.amplify-link {
+  color: #21468B;
+}
+
+.amplify-link:hover {
+  color: #FF6200;
+}
+
+/* Style for tabs */
+.amplify-tabs-item[data-state='active'] {
+  color: #FF6200;
+  border-color: #FF6200;
+}
+
+.amplify-tabs-item:hover {
+  color: #FF6200;
+}
+
+/* Style for form fields */
+.amplify-input:focus, 
+.amplify-select:focus, 
+.amplify-textarea:focus {
+  border-color: #FF6200;
+  box-shadow: 0 0 0 2px rgba(255, 98, 0, 0.2);
+}
+
+/* Style for checkboxes */
+.amplify-checkbox:checked {
+  background-color: #FF6200;
+  border-color: #FF6200;
+}
+
+/* Style for radio buttons */
+.amplify-radio:checked {
+  background-color: #FF6200;
+  border-color: #FF6200;
+}
+
+/* Style for error messages */
+.amplify-alert[data-variation='error'] {
+  background-color: rgba(174, 28, 40, 0.1);
+  border-color: #AE1C28;
+  color: #AE1C28;
+}
+
+/* Style for success messages */
+.amplify-alert[data-variation='success'] {
+  background-color: rgba(255, 98, 0, 0.1);
+  border-color: #FF6200;
+  color: #FF6200;
 }

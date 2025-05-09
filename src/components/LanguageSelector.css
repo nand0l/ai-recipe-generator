@@ -1,0 +1,116 @@
+.language-selector-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  color: #333;
+}
+
+.language-dropdown-section {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+
+.selector-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #21468B; /* Dutch blue */
+}
+
+.language-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.language-button {
+  background-color: #ffffff;
+  border: 1px solid #21468B; /* Dutch blue */
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #333;
+}
+
+.language-button:hover {
+  background-color: #f0f4ff; /* Light blue hover */
+}
+
+.language-dropdown-content {
+  position: absolute;
+  background-color: #ffffff;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.language-option {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.language-option:hover {
+  background-color: #f0f4ff; /* Light blue hover */
+}
+
+.language-option.selected {
+  background-color: #FFF2E5; /* Very light orange */
+  font-weight: bold;
+  color: #FF6200; /* Dutch Orange */
+}
+
+.measurement-selector {
+  display: flex;
+  flex-direction: column;
+}
+
+.measurement-label {
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.measurement-options {
+  display: flex;
+  gap: 15px;
+}
+
+.measurement-option {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  .language-selector-container {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .language-dropdown-section {
+    margin-bottom: 0;
+  }
+  
+  .measurement-selector {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
+}
